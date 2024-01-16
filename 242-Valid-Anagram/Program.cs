@@ -36,6 +36,46 @@ namespace _242_Valid_Anagram
     {
         static void Main(string[] args)
         {
+            string[][] test = {
+            new string[] { "anagram", "nagaram" },
+            new string[] { "rat", "car" },
+            new string[] { "abc", "cba" }
+            };
+
+            foreach (var testCase in test)
+            {
+                bool areAnagrams = IsAnagram(testCase[0], testCase[1]);
+                Console.WriteLine(areAnagrams);
+           
+            }
+
+            Console.ReadKey();
         }
+
+        static bool IsAnagram(string s, string t)
+        {
+
+            if (s.Length != t.Length) return false;
+            if (s == t) return true;
+
+            int[] sCount = new int[26];
+            int[] tCount = new int[26];
+            s = s.ToLower();
+            t = t.ToLower();
+
+            for (int i = 0; i < s.Length; i++)
+            {
+                sCount[s[i] - 'a']++;
+            }
+
+            for (int j = 0; j < t.Length; j++)
+            {
+                tCount[t[j] - 'a']++;
+            }
+
+            return sCount.SequenceEqual(tCount);
+                
+        }
+
     }
 }
