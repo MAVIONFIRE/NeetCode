@@ -35,6 +35,7 @@ Follow-up: Can you come up with an algorithm that is less than O(n2) time comple
 
 using System;
 using System.Collections.Generic;
+using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,11 +46,50 @@ namespace _1_Two_Sum
     {
         static void Main(string[] args)
         {
+            int[][] testCases = {
+            new int[] { 2, 7, 11, 15 },
+            new int[] { 3, 2, 4 },
+            new int[] { 3, 3 }
+            };
+
+            int[] targets = { 9, 6, 6 };
+
+            for (int i = 0; i < testCases.Length; i++)
+            {
+                int[] result = TwoSum(testCases[i], targets[i]);
+
+                Console.WriteLine(result[0] + " " + result[1]);
+            }
+
+            Console.ReadLine();
         }
 
         static int[] TwoSum(int[] nums, int target)
         {
+            Dictionary<int, int> map = new Dictionary<int, int>();
 
+            int[] answer = new int[2];
+
+            for (int i = 0; i < nums.Length; i++)
+            {
+                if (!map.ContainsKey(nums[i])) 
+                {
+                    if (!map.ContainsKey(target - nums[i])) 
+                    {
+                        map.Add(target - nums[i], i);
+                    }
+                }
+
+                else
+                {
+                    answer[0] = map[nums[i]];
+                    answer[1] = i;
+
+                    return answer;
+                }
+            }
+
+            return new int[] { -1, -1 };
         }
     }
 }
